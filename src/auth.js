@@ -6,3 +6,5 @@ export const {auth,handlers,signIn,signOut} = NextAuth({
         Github
     ]
 })
+
+// auth like useSession hook , by the help of this we can check that the user is logedin or not 

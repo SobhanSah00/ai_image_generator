@@ -1,18 +1,24 @@
-"use client"
+"use server"
 
-import {login} from "../lib/actions/auth"
+import { auth } from ".././auth"
+import SignOutButton from "./components/SignOutButton";
+import SignInPage from "./signin/page"
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  if (session?.user) {
+    console.log(session);
+    return <div>
+      {" "}
+      <h1>user signed in with name  : {session?.user.name}</h1>
+      <SignOutButton />
+
+    </div>
+  }
   return (
     <div>
-      <p>
-        you are not sign in in github
-      </p>
-      <button
-        onClick={() => login()}
-       className=' cursor-pointer p-4 bg-green-600 rounded-2xl'>
-        sign in with github
-      </button>
+      <SignInPage />
     </div>
   )
 }
