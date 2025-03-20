@@ -1,7 +1,7 @@
 "use server"
 
 import { auth } from ".././auth"
-import SignOutButton from "./components/SignOutButton";
+import SignOutButton from "../components/SignOutButton";
 import SignInPage from "./signin/page"
 
 export default async function Home() {
