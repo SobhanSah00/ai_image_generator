@@ -15,6 +15,6 @@ export const loginWithGoogle = async () => {
 
 export const logout = async () => {
     await signOut({
-        redirectTo : "/imagegenerator"
+        redirectTo : "/"
     })
 }

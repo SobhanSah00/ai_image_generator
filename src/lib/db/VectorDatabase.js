@@ -1,20 +1,26 @@
-import {MongoClient} from "mongodb"
+import { MongoClient } from "mongodb";
 import { DB_NAME } from "../../constants/index";
 
-const MONGO_URI = process.env.MONGO_URI;
-const COLLECTION_NAME = "vectorEmbeddings"
+const MONGO_URI = process.env.MONGO_URI; 
+const COLLECTION_NAME = "vectorEmbeddings";
 
 let client;
 let db;
 
 export async function connectDB() {
-    if(!client) {
-        client = new MongoClient(MONGO_URI);
-        await client.connect(MONGO_URI);
-        db = client.db(DB_NAME);
+    if (!client) {
+        client = new MongoClient(MONGO_URI); 
+        await client.connect();  
+        db = client.db(DB_NAME); 
     }
-    return db.collection(COLLECTION_NAME)
+    return db;
 }
+
+export async function getCollection() {
+    const database = await connectDB();
+    return database.collection(COLLECTION_NAME); // Return the collection
+}
+
 
 /*
 

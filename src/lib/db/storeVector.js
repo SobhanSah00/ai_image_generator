@@ -1,21 +1,46 @@
 import { connectDB } from "./VectorDatabase";
 import { generateEmbedding } from "../utils/embedding";
 
-export async function storeVector(prompt,imageUrl) {
-    const collection = await connectDB();
+export async function storeVector(prompt, imageUrl) {
+    const db = await connectDB();
+    const collection = db.collection("vectorEmbeddings");
 
-    const embedding = await generateEmbedding(prompt);
+    try {
+        // Check if the prompt already exists
+        const existingEntry = await collection.findOne({ prompt });
 
-    const newEntry = {
-        prompt,
-        imageUrl,
-        embedding
-    };
+        if (existingEntry) {
+            console.log("Prompt already exists, returning the existing image.");
 
-    await collection.insertOne(newEntry);
+            // Just return the existing image instead of inserting a new vector
+            return {
+                success: true,
+                imageUrl: existingEntry.imageUrl
+            };
+        }
 
-    return {
-        success : true,
-        message : "Vector Stored Successfully"
+        // Generate embedding
+        const embedding = await generateEmbedding(prompt);
+
+        // Store new entry
+        await collection.insertOne({
+            prompt,
+            imageUrl,
+            embedding
+        });
+
+        return {
+            success: true,
+            message: "Vector Stored Successfully",
+            imageUrl
+        };
+
+    } catch (error) {
+        console.error("Error storing vector:", error);
+        return {
+            success: false,
+            message: "Failed to store vector",
+            error: error.message
+        };
     }
 }

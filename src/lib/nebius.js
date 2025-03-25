@@ -28,7 +28,6 @@ export async function generateImage(prompt) {
         
         console.log("Response received from API:", response);
         
-        // Check if we have the expected response structure
         if (response && response.data && response.data[0]) {
             if (response.data[0].url) {
                 console.log("Image URL generated:", response.data[0].url);
@@ -40,7 +39,6 @@ export async function generateImage(prompt) {
             }
         }
         
-        // If we reach here, log the entire response for debugging
         console.error("Unexpected response structure:", JSON.stringify(response, null, 2));
         throw new Error("Invalid response format from Nebius API");
     } catch (error) {
