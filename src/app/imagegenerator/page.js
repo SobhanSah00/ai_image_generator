@@ -95,7 +95,7 @@ export default function App() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
                             </div>
-                            <p className="text-sm text-gray-400 text-center">Prompt: "{prompt}"</p>
+                            <p className="text-sm text-gray-400 text-center">Prompt: &quot;{prompt}&quot;</p>
                         </div>
                     )}
                 </div>
